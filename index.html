@@ -1,201 +1,178 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HK Fusion Energy | Sovereign Clean Power Infrastructure</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HK-FUSION</title>
+    <style>
+        :root {
+            --neon-orange: #ff6600;
+            --dark-bg: #00050a;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            font-family: 'Inter', 'Apple SD Gothic Neo', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-<style>
-body{
-    margin:0;
-    font-family:'Orbitron',sans-serif;
-    background:linear-gradient(135deg,#0d111e,#11203a);
-    color:#e6f3ff;
-}
+        /* 우측 상단 언어 선택 영역 */
+        .nav-languages {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            z-index: 10;
+        }
 
-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:40px 60px;
-}
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 102, 0, 0.4);
+            color: var(--neon-orange);
+            padding: 6px 10px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-h1{
-    font-size:46px;
-    color:#00f0ff;
-}
+        .lang-btn:hover {
+            background: var(--neon-orange);
+            color: #fff;
+            box-shadow: 0 0 15px var(--neon-orange);
+        }
 
-.lang-buttons button{
-    background:transparent;
-    border:1px solid #00f0ff;
-    color:#00f0ff;
-    padding:8px 18px;
-    margin-left:8px;
-    cursor:pointer;
-    transition:0.3s;
-}
+        /* 메인 콘텐츠 */
+        .content-box {
+            text-align: center;
+            animation: fadeIn 2s ease-in;
+        }
 
-.lang-buttons button:hover{
-    background:#00f0ff;
-    color:#000;
-}
+        .brand-logo {
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            font-weight: 900;
+            color: var(--neon-orange);
+            text-shadow: 0 0 10px var(--neon-orange), 0 0 30px var(--neon-orange);
+            margin: 0;
+            letter-spacing: 8px;
+            transform: skew(-5deg);
+        }
 
-main{
-    max-width:1000px;
-    margin:40px 60px;
-}
+        .slogan-box {
+            margin-top: 30px;
+            min-height: 80px;
+        }
 
-h2{
-    color:#c86bff;
-    margin-top:40px;
-}
+        .slogan-text {
+            font-size: 1.8rem;
+            font-weight: 300;
+            opacity: 0.9;
+            color: #e0e0e0;
+            margin-bottom: 10px;
+        }
 
-p{
-    line-height:1.8;
-    font-size:17px;
-}
+        .customer-success {
+            font-size: 1.2rem;
+            color: var(--neon-orange);
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
 
-.highlight{
-    color:#00f0ff;
-    font-weight:bold;
-}
+        /* 이메일 정보 */
+        .footer-info {
+            position: absolute;
+            bottom: 30px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.4);
+        }
 
-footer{
-    margin:80px 60px 40px 60px;
-    font-size:14px;
-    color:#8899aa;
-}
-</style>
+        .footer-info a {
+            color: var(--neon-orange);
+            text-decoration: none;
+        }
 
-<script>
-function switchLang(lang){
-    document.querySelectorAll('.lang').forEach(el=>el.style.display='none');
-    document.getElementById(lang).style.display='block';
-}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-window.onload=function(){
-    const l=navigator.language;
-    if(l.startsWith('ko')) switchLang('ko');
-    else if(l.startsWith('zh')) switchLang('zh');
-    else if(l.startsWith('ar')) switchLang('ar');
-    else switchLang('en');
-}
-</script>
-
+        /* 배경 우주 질감 */
+        .bg-stars {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #0a1128 0%, #00050a 100%);
+            z-index: -1;
+        }
+    </style>
 </head>
 <body>
 
-<header>
-<h1>HK Fusion Energy</h1>
-<div class="lang-buttons">
-<button onclick="switchLang('en')">English</button>
-<button onclick="switchLang('ko')">한국어</button>
-<button onclick="switchLang('zh')">中文</button>
-<button onclick="switchLang('ar')">العربية</button>
-</div>
-</header>
+    <div class="bg-stars"></div>
 
-<main>
+    <nav class="nav-languages">
+        <button class="lang-btn" onclick="updateContent('ko')">한국어</button>
+        <button class="lang-btn" onclick="updateContent('en')">English</button>
+        <button class="lang-btn" onclick="updateContent('zh')">Chinese</button>
+        <button class="lang-btn" onclick="updateContent('ar')">Arabic</button>
+        <button class="lang-btn" onclick="updateContent('hi')">Hindi</button>
+        <button class="lang-btn" onclick="updateContent('ru')">Russian</button>
+        <button class="lang-btn" onclick="updateContent('fr')">French</button>
+        <button class="lang-btn" onclick="updateContent('uk')">Ukraine</button>
+        <button class="lang-btn" onclick="updateContent('ja')">Japanese</button>
+        <button class="lang-btn" onclick="updateContent('es')">Spanish</button>
+    </nav>
 
-<!-- ENGLISH -->
-<div id="en" class="lang">
-<p><strong>Powering Humanity with Clean, Infinite, Sovereign Energy.</strong></p>
+    <div class="content-box">
+        <h1 class="brand-logo">HK-FUSION</h1>
+        <div class="slogan-box">
+            <div id="main-slogan" class="slogan-text">인류의 영원한 태양을 우주에 띄우다</div>
+            <div id="sub-slogan" class="customer-success">고객의 성공을 위하여</div>
+        </div>
+    </div>
 
-<h2>Corporate Overview</h2>
-<p>HK Fusion Energy is a frontier clean power technology company pioneering scalable fusion energy systems for industrial, grid-scale, aerospace, and strategic infrastructure deployment.</p>
-<p>We leverage advanced plasma confinement, superconducting magnet architectures, and AI-optimized control systems to unlock commercial fusion viability.</p>
+    <div class="footer-info">
+        Contact: <a href="mailto:info@fusion.com">info@fusion.com</a>
+    </div>
 
-<h2>Core Strategic Domains</h2>
-<p>Fusion Reactor Platforms • Industrial Power Generation • Space-Based Energy Systems • Grid-Scale Sovereign Infrastructure</p>
+    <script>
+        const translations = {
+            'ko': { s: '인류의 영원한 태양을 우주에 띄우다', t: '고객의 성공을 위하여' },
+            'en': { s: "Launching Humanity's Eternal Sun into Space", t: 'For Customer Success' },
+            'zh': { s: '将人类永恒的太阳升入太空', t: '助力客户成功' },
+            'ar': { s: 'إطلاق شمس البشرية الأبدية في الفضاء', t: 'من أجل نجاح العملاء' },
+            'hi': { s: 'मानवता के शाश्वत सूर्य को अंतरिक्ष में प्रक्षेपित करना', t: 'ग्राहकों की सफलता के लिए' },
+            'ru': { s: 'Запуск вечного солнца человечества в космос', t: 'Ради успеха клиентов' },
+            'fr': { s: "Lancer le soleil éternel de l'humanité dans l'espace", t: 'Pour le succès du client' },
+            'uk': { s: 'Запуск вічного сонця людства в космос', t: 'Заради успіху клієнтів' },
+            'ja': { s: '人類の永遠の太陽を宇宙に浮かべる', t: '顧客の成功のために' },
+            'es': { s: 'Lanzando el sol eterno de la humanidad al espacio', t: 'Por el éxito del cliente' }
+        };
 
-<h2>Technology Edge</h2>
-<p>Our proprietary high-temperature plasma stabilization and quantum-optimized AI control frameworks accelerate net-positive fusion conditions, enabling safe, continuous, ultra-low carbon power production.</p>
+        function updateContent(lang) {
+            const slogan = document.getElementById('main-slogan');
+            const target = document.getElementById('sub-slogan');
+            
+            // 페이드 효과를 위해 잠시 투명하게
+            slogan.style.opacity = 0;
+            target.style.opacity = 0;
 
-<h2>Market Opportunity</h2>
-<p>Global energy demand, decarbonization mandates, and strategic energy independence create a multi-trillion-dollar fusion market opportunity. HK Fusion Energy is positioned as a <span class="highlight">sovereign energy infrastructure provider</span> capable of serving governments, utilities, and advanced industrial sectors.</p>
-
-<h2>Vision 2035</h2>
-<p>Achieve commercial fusion rollout by 2030 and deploy sovereign fusion power stations globally, supporting resilient smart cities, aerospace energy networks, and strategic national infrastructures.</p>
-
-<p>Contact: info@hkfusionenergy</p>
-</div>
-
-<!-- KOREAN -->
-<div id="ko" class="lang" style="display:none;">
-<p><strong>깨끗하고 무한하며 주권적 에너지를 실현합니다.</strong></p>
-
-<h2>회사 개요</h2>
-<p>HK Fusion Energy는 산업용, 전력망, 항공우주 및 전략 인프라 적용을 위한 확장 가능한 핵융합 에너지 시스템을 선도하는 클린 파워 기술 기업입니다.</p>
-<p>첨단 플라즈마 제어 기술, 초전도 자석 구조, AI 최적 제어 시스템을 결합하여 상업적 핵융합 실현을 가속화합니다.</p>
-
-<h2>핵심 전략 분야</h2>
-<p>융합로 플랫폼 • 산업용 발전 • 우주 기반 에너지 • 주권형 전력망 인프라</p>
-
-<h2>기술 경쟁력</h2>
-<p>독자적 고온 플라즈마 안정화 기술과 양자 최적화 AI 제어 체계는 지속적이며 안전한 저탄소 에너지 생산을 가능하게 합니다.</p>
-
-<h2>시장 기회</h2>
-<p>에너지 수요 증가, 탈탄소화 정책, 에너지 주권 확보는 수조 달러 규모의 핵융합 시장 기회를 창출합니다. HK Fusion Energy는 정부, 전력공급사 및 첨단 산업을 위한 주권형 에너지 인프라 제공자로 포지셔닝되어 있습니다.</p>
-
-<h2>Vision 2035</h2>
-<p>2030년 상업용 핵융합 상용화를 달성하고, 전략적 스마트 도시 및 국가 인프라 전역에 주권형 융합 에너지 발전소를 구축합니다.</p>
-
-<p>문의: info@hkfusionenergy</p>
-</div>
-
-<!-- CHINESE -->
-<div id="zh" class="lang" style="display:none;">
-<p><strong>以清洁、无限、主权能源驱动人类未来。</strong></p>
-
-<h2>公司概述</h2>
-<p>HK Fusion Energy 是一家领先的清洁能源技术企业，专注于工业级、全网规模及战略基础设施的可扩展核聚变能源系统研发。</p>
-<p>我们结合先进等离子体约束技术、超导磁体架构和 AI 优化控制系统，实现商业核聚变能量的可行性。</p>
-
-<h2>核心战略领域</h2>
-<p>聚变反应堆平台 • 工业发电 • 太空能源系统 • 主权电网基础设施</p>
-
-<h2>技术优势</h2>
-<p>我们自主研发的高温等离子体稳定化和量子优化 AI 控制框架加速实现净正能量聚变条件，提供安全、连续、超低碳电力。</p>
-
-<h2>市场机会</h2>
-<p>全球能源需求、脱碳政策和能源主权战略共同推动数万亿美元规模的聚变能源市场机会。HK Fusion Energy 定位为可服务政府、公共电网及高端工业的<span class="highlight">主权能源基础设施供应商</span>。</p>
-
-<h2>愿景 2035</h2>
-<p>实现 2030 年商业核聚变部署，并在全球范围内部署主权核聚变电站，支持智能城市、太空能源网络和国家战略基础设施。</p>
-
-<p>联系: info@hkfusionenergy</p>
-</div>
-
-<!-- ARABIC -->
-<div id="ar" class="lang" style="display:none; direction:rtl;">
-<p><strong>نُمكّن البشرية بطاقة نظيفة، لا نهائية، وسيادية.</strong></p>
-
-<h2>نظرة عامة</h2>
-<p>HK Fusion Energy شركة تقنية طاقة نظيفة في طليعة تطوير أنظمة الطاقة الاندماجية القابلة للتوسع للتطبيقات الصناعية، الشبكات الكهربائية، الفضاء والبنى التحتية الاستراتيجية.</p>
-<p>نستفيد من التحكم المتقدم في البلازما، هياكل المغناطيسية فائقة التوصيل وأنظمة التحكم المُحسّنة بالذكاء الاصطناعي لتحقيق جدوى الاندماج التجاري.</p>
-
-<h2>المجالات الاستراتيجية</h2>
-<p>منصات مفاعلات الاندماج • توليد الطاقة الصناعية • أنظمة الطاقة الفضائية • بنى تحتية سيادية للشبكات</p>
-
-<h2>الميزة التقنية</h2>
-<p>إطار التحكم الذكي المدعوم بالذكاء الاصطناعي وتقنيات استقرار البلازما عالية الحرارة يمكننا من إنتاج طاقة منخفضة الكربون بشكل آمن ومستمر.</p>
-
-<h2>فرصة الاستثمار</h2>
-<p>طلب الطاقة العالمي، سياسات خفض الكربون، واستراتيجيات السيادة الطاقية تخلق سوقاً ضخماً لاندماج الطاقة. HK Fusion Energy في موقف يؤهلها لتكون<span class="highlight">مزود بنية تحتية طاقية سيادية</span> يخدم الحكومات والقطاع الصناعي المتقدم.</p>
-
-<h2>رؤية 2035</h2>
-<p>نحقق الانتشار التجاري لطاقة الاندماج بحلول 2030 وننشر محطات طاقة اندماجية سيادية عالمياً لدعم المدن الذكية وشبكات الطاقة المتقدمة.</p>
-
-<p>البريد الإلكتروني: info@hkfusionenergy</p>
-</div>
-
-</main>
-
-<footer>
-© 2026 HK Fusion Energy | Sovereign Clean Power Infrastructure
-</footer>
-
+            setTimeout(() => {
+                slogan.innerText = translations[lang].s;
+                target.innerText = translations[lang].t;
+                slogan.style.opacity = 1;
+                target.style.opacity = 1;
+            }, 200);
+        }
+    </script>
 </body>
 </html>
