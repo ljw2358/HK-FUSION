@@ -22,54 +22,55 @@
             line-height: 1.6;
         }
 
-        /* 다국어 버튼 스타일 */
-        .lang-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.5);
-            position: sticky;
-            top: 0;
+        /* 다국어 선택창 (네모 한 칸에 숨기기) */
+        .lang-wrapper {
+            position: fixed;
+            top: 20px;
+            right: 20px;
             z-index: 1000;
         }
 
-        .lang-btn {
-            background: transparent;
-            border: 1px solid #444;
+        .lang-select {
+            background: rgba(13, 20, 29, 0.9);
             color: var(--primary-blue);
-            padding: 5px 12px;
+            border: 1px solid var(--primary-blue);
+            padding: 8px 15px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s ease;
+            font-size: 14px;
+            outline: none;
+            appearance: none; /* 기본 화살표 숨기기 */
+            -webkit-appearance: none;
+            text-align: center;
         }
 
-        .lang-btn:hover, .lang-btn.active {
+        .lang-select:hover {
             background: var(--primary-blue);
             color: #000;
-            border-color: var(--primary-blue);
         }
 
         /* 헤더 섹션 */
         header {
             text-align: center;
-            padding: 100px 20px;
+            padding: 120px 20px;
             background: radial-gradient(circle at center, #1a2a3a 0%, #050a10 70%);
         }
 
         .hero-title {
-            font-size: 4rem;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
             font-weight: 900;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             letter-spacing: 2px;
-            text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+            text-transform: uppercase;
+            text-shadow: 0 0 25px rgba(0, 242, 255, 0.6);
         }
 
         .hero-subtitle {
-            font-size: 1.5rem;
+            font-size: clamp(1rem, 3vw, 1.5rem);
             color: var(--text-white);
             opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         /* 메인 컨텐츠 */
@@ -86,6 +87,11 @@
             padding: 40px;
             margin-bottom: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
         }
 
         h2 {
@@ -94,6 +100,7 @@
             margin-top: 0;
             border-left: 4px solid var(--accent-pink);
             padding-left: 15px;
+            margin-bottom: 25px;
         }
 
         .content-text {
@@ -102,25 +109,29 @@
             word-break: keep-all;
         }
 
-        .strategy-list {
+        .strategy-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 25px;
         }
 
         .strategy-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
+            background: rgba(0, 242, 255, 0.05);
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            padding: 20px;
             border-radius: 8px;
             text-align: center;
+            font-weight: bold;
+            color: var(--primary-blue);
         }
 
         footer {
             text-align: center;
-            padding: 60px 20px;
+            padding: 80px 20px;
             font-size: 0.9rem;
             color: #555;
+            border-top: 1px solid #1e2a3a;
         }
 
         .contact-link {
@@ -130,26 +141,27 @@
         }
 
         @media (max-width: 600px) {
-            .hero-title { font-size: 2.5rem; }
-            .strategy-list { grid-template-columns: 1fr; }
+            .card { padding: 25px; }
         }
     </style>
 </head>
 <body>
 
-    <nav class="lang-container" id="langNav">
-        <button class="lang-btn active" onclick="setLang('ko')">한국어</button>
-        <button class="lang-btn" onclick="setLang('en')">ENGLISH</button>
-        <button class="lang-btn" onclick="setLang('zh')">CHINESE</button>
-        <button class="lang-btn" onclick="setLang('ar')">ARABIC</button>
-        <button class="lang-btn" onclick="setLang('hi')">HINDI</button>
-        <button class="lang-btn" onclick="setLang('ru')">RUSSIAN</button>
-        <button class="lang-btn" onclick="setLang('fr')">FRENCH</button>
-        <button class="lang-btn" onclick="setLang('uk')">UKRAINE</button>
-        <button class="lang-btn" onclick="setLang('ja')">JAPANESE</button>
-        <button class="lang-btn" onclick="setLang('es')">SPANISH</button>
-        <button class="lang-btn" onclick="setLang('pt')">BRAZIL</button>
-    </nav>
+    <div class="lang-wrapper">
+        <select class="lang-select" onchange="setLang(this.value)">
+            <option value="ko">KOREAN</option>
+            <option value="en">ENGLISH</option>
+            <option value="zh">CHINESE</option>
+            <option value="ja">JAPANESE</option>
+            <option value="ru">RUSSIAN</option>
+            <option value="fr">FRENCH</option>
+            <option value="es">SPANISH</option>
+            <option value="pt">BRAZIL</option>
+            <option value="hi">HINDI</option>
+            <option value="ar">ARABIC</option>
+            <option value="uk">UKRAINE</option>
+        </select>
+    </div>
 
     <header>
         <div class="hero-title">HK FUSION ENERGY</div>
@@ -161,13 +173,13 @@
             <h2 id="aboutTitle">회사 개요</h2>
             <div class="content-text" id="aboutText">
                 HK Fusion Energy는 꺼지지 않는 영원한 태양의 빛, '인공태양' 기술을 통해 인류의 에너지 패러다임을 혁신합니다. 우리는 산업용 발전, 국가 전력망, 항공우주 및 전략 인프라에 즉각 적용 가능한 확장형 핵융합 에너지 시스템을 선도하는 글로벌 클린 파워 기술 기업입니다.<br><br>
-                독보적인 첨단 플라즈마 제어 기술과 초전도 자석 구조, 그리고 AI 기반의 실시간 최적 제어 시스템을 결합하여, 위험성 없는 무결점 상업적 핵융합 실현을 가속화하고 있습니다.
+                첨단 플라즈마 제어 기술과 초전도 자석 구조, AI 최적 제어 시스템을 결합하여 위험 없는 상업적 핵융합 실현을 가속화합니다.
             </div>
         </section>
 
         <section class="card">
             <h2 id="strategyTitle">핵심 전략 분야</h2>
-            <div class="strategy-list" id="strategyList">
+            <div class="strategy-grid" id="strategyGrid">
                 <div class="strategy-item">융합로 플랫폼</div>
                 <div class="strategy-item">산업용 발전</div>
                 <div class="strategy-item">우주 기반 에너지</div>
@@ -175,10 +187,10 @@
             </div>
         </section>
 
-        <section class="card" style="border: 1px dashed var(--primary-blue);">
+        <section class="card" style="border: 1px solid var(--primary-blue);">
             <h2 id="visionTitle">미래 비전</h2>
             <div class="content-text" id="visionText">
-                우리는 자원 종속이 없는 '에너지 주권'의 시대를 엽니다. HK Fusion Energy가 생산하는 에너지는 탄소 배출이 전혀 없는 청정 에너지이며, 지구를 넘어 우주 개척 시대의 핵심 동력이 될 것입니다. 인류의 내일을 밝히는 멈추지 않는 동력원, 그것이 HK Fusion Energy의 약속입니다.
+                우리는 자원 종속이 없는 '에너지 주권'의 시대를 엽니다. HK Fusion Energy가 생산하는 에너지는 탄소 배출이 전혀 없는 청정 에너지이며, 지구를 넘어 우주 개척 시대의 핵심 동력이 될 것입니다. 인류의 내일을 밝히는 멈추지 않는 동력원, 그것이 우리의 약속입니다.
             </div>
         </section>
     </div>
@@ -193,48 +205,44 @@
             ko: {
                 subtitle: "깨끗하고 무한하며 주권적 에너지를 실현합니다.",
                 aboutT: "회사 개요",
-                aboutC: "HK Fusion Energy는 꺼지지 않는 영원한 태양의 빛, '인공태양' 기술을 통해 인류의 에너지 패러다임을 혁신합니다. 우리는 산업용 발전, 국가 전력망, 항공우주 및 전략 인프라에 즉각 적용 가능한 확장형 핵융합 에너지 시스템을 선도하는 글로벌 클린 파워 기술 기업입니다.<br><br>독보적인 첨단 플라즈마 제어 기술과 초전도 자석 구조, 그리고 AI 기반의 실시간 최적 제어 시스템을 결합하여, 위험성 없는 무결점 상업적 핵융합 실현을 가속화하고 있습니다.",
+                aboutC: "HK Fusion Energy는 꺼지지 않는 영원한 태양의 빛, '인공태양' 기술을 통해 인류의 에너지 패러다임을 혁신합니다. 우리는 산업용 발전, 국가 전력망, 항공우주 및 전략 인프라에 즉각 적용 가능한 확장형 핵융합 에너지 시스템을 선도하는 글로벌 클린 파워 기술 기업입니다.<br><br>첨단 플라즈마 제어 기술과 초전도 자석 구조, AI 최적 제어 시스템을 결합하여 위험 없는 상업적 핵융합 실현을 가속화합니다.",
                 stratT: "핵심 전략 분야",
                 strats: ["융합로 플랫폼", "산업용 발전", "우주 기반 에너지", "주권형 전력망 인프라"],
                 visionT: "미래 비전",
-                visionC: "우리는 자원 종속이 없는 '에너지 주권'의 시대를 엽니다. HK Fusion Energy가 생산하는 에너지는 탄소 배출이 전혀 없는 청정 에너지이며, 지구를 넘어 우주 개척 시대의 핵심 동력이 될 것입니다."
+                visionC: "우리는 자원 종속이 없는 '에너지 주권'의 시대를 엽니다. HK Fusion Energy가 생산하는 에너지는 탄소 배출이 전혀 없는 청정 에너지이며, 지구를 넘어 우주 개척 시대의 핵심 동력이 될 것입니다. 인류의 내일을 밝히는 멈추지 않는 동력원, 그것이 우리의 약속입니다."
             },
             en: {
-                subtitle: "Realizing clean, infinite, and sovereign energy.",
+                subtitle: "Realizing clean, infinite, and sovereign energy for humanity.",
                 aboutT: "Company Overview",
-                aboutC: "HK Fusion Energy innovates the human energy paradigm through 'Artificial Sun' technology. We are a global clean power leader providing scalable fusion systems for industry, power grids, and aerospace.<br><br>Combining plasma control and AI optimization, we accelerate commercial fusion.",
+                aboutC: "HK Fusion Energy innovates the energy paradigm through 'Artificial Sun' technology. We are a global clean power leader providing scalable fusion systems for industry, grids, and aerospace.<br><br>Combining advanced plasma control and AI, we accelerate the realization of safe, commercial fusion energy.",
                 stratT: "Core Strategies",
                 strats: ["Fusion Reactor Platform", "Industrial Power", "Space-based Energy", "Sovereign Grid Infrastructure"],
                 visionT: "Future Vision",
-                visionC: "We open the era of energy sovereignty without resource dependence. Our carbon-free energy will power the future of Earth and deep space exploration."
-            },
-            ja: {
-                subtitle: "クリーンで無限、そして主権的なエネルギーを実現します。",
-                aboutT: "会社概要",
-                aboutC: "HK Fusion Energyは「人工太陽」技術を通じて、人類のエネルギーパラダイムを革新します。産業用発電、国家電力網、宇宙開発に適用可能な拡張型核融合システムをリードするクリーンパワー企業です。",
-                stratT: "核心戦略分野",
-                strats: ["核融合炉プラットフォーム", "産業用発電", "宇宙ベースエネルギー", "主権型電力網インフラ"],
-                visionT: "未来のビジョン",
-                visionC: "資源に依存しない「エネルギー主権」の時代を切り拓きます。私たちのエネルギーは炭素排出ゼロで、宇宙開拓の核心的な動力となります。"
+                visionC: "We open the era of energy sovereignty without resource dependence. Our carbon-free energy will power Earth and the future of deep space exploration. An unstoppable power source for tomorrow."
             },
             zh: {
                 subtitle: "实现清洁、无限且具有主权的能源。",
                 aboutT: "公司概况",
-                aboutC: "HK Fusion Energy 通过“人造太阳”技术革新人类能源范式。我们是全球清洁能源领导者，为工业、电网和航天提供可扩展的核聚变系统。",
+                aboutC: "HK Fusion Energy 通过“人造太阳”技术革新人类能源范式。我们是全球清洁能源领导者，为工业、电网和航天提供可扩展的核聚变系统。<br><br>结合先进的等离子体控制和人工智能，我们加速实现安全、商业化的核聚变能源。",
                 stratT: "核心战略领域",
                 strats: ["聚变堆平台", "工业发电", "空间能源", "主权电网基础设施"],
                 visionT: "未来愿景",
-                visionC: "我们开启了不依赖资源的“能源主权”时代。我们的无碳能源将为地球和深空探测的未来提供动力。"
+                visionC: "我们开启了不依赖资源的“能源主权”时代。我们的无碳能源将为地球和深空探测的未来提供动力。为明天提供永不停歇的动力。"
+            },
+            ja: {
+                subtitle: "クリーンで無限、そして主権的なエネルギーを実現します。",
+                aboutT: "会社概要",
+                aboutC: "HK Fusion Energyは「人工太陽」技術を通じて、人類のエネルギーパラダイムを革新します。産業用発電、国家電力網、宇宙開発に適用可能な拡張型核融合システムをリードするクリーンパワー企業です。<br><br>高度なプラズマ制御とAIを組み合わせ、安全で商業的な核融合の実現を加速します。",
+                stratT: "核心戦略分野",
+                strats: ["核融合炉プラットフォーム", "産業用発電", "宇宙ベースエネルギー", "主権型電力網インフラ"],
+                visionT: "未来のビジョン",
+                visionC: "資源に依存しない「エネルギー主権」の時代を切り拓きます。私たちのクリーンエネルギーは、地球と宇宙開拓の核心的な動力となります。明日を照らす止まらない動力源、それが私たちの約束です。"
             }
-            // 다른 언어들도 유사한 방식으로 확장 가능합니다.
+            // 러시아어, 프랑스어 등도 이와 같은 형식으로 추가 가능합니다.
         };
 
         function setLang(lang) {
-            // 버튼 활성화 표시
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
-            const t = translations[lang] || translations['en']; // 해당 언어 없으면 영어로
+            const t = translations[lang] || translations['en'];
 
             document.getElementById('heroSubtitle').innerText = t.subtitle;
             document.getElementById('aboutTitle').innerText = t.aboutT;
@@ -243,11 +251,14 @@
             document.getElementById('visionTitle').innerText = t.visionT;
             document.getElementById('visionText').innerText = t.visionC;
 
-            const strategyItems = document.querySelectorAll('.strategy-item');
+            const items = document.querySelectorAll('.strategy-item');
             t.strats.forEach((s, i) => {
-                if(strategyItems[i]) strategyItems[i].innerText = s;
+                if(items[i]) items[i].innerText = s;
             });
         }
     </script>
 </body>
 </html>
+
+
+NAVER 모바일 웹에서 보냈습니다.
